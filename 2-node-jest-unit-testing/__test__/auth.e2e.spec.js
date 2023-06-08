@@ -46,11 +46,10 @@ describe("Auth (e2e)", () => {
       const res = await request(app).post("/api/v1/login").send({
         email: "test@gmail.com",
       });
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toBe("Please enter & Password");
     });
-
-    expect(res.statusCode).toBe(400);
-    expect(res.body.error).toBe("Please enter & Password");
-
     it("Should throw invalid email or password error", async () => {
       const res = await request(app).post("/api/v1/login").send({
         email: "test@gmail.com",
@@ -60,7 +59,6 @@ describe("Auth (e2e)", () => {
       expect(res.statusCode).toBe(401);
       expect(res.body.error).toBe("Invalid Email or Password");
     });
-
     it("Should login user", async () => {
       const res = await request(app).post("/api/v1/login").send({
         email: "test@gmail.com",
